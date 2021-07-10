@@ -1,5 +1,6 @@
 package com.xxmicloxx.NoteBlockAPI;
 
+import com.xxmicloxx.NoteBlockAPI.consts.TickListener;
 import com.xxmicloxx.NoteBlockAPI.songplayer.SongPlayer;
 import com.xxmicloxx.NoteBlockAPI.utils.MathUtils;
 import com.xxmicloxx.NoteBlockAPI.utils.Updater;
@@ -15,10 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -30,6 +28,8 @@ public class NoteBlockAPI extends JavaPlugin {
 	
 	private Map<UUID, ArrayList<SongPlayer>> playingSongs = new ConcurrentHashMap<UUID, ArrayList<SongPlayer>>();
 	private Map<UUID, Byte> playerVolume = new ConcurrentHashMap<UUID, Byte>();
+
+	private static List<TickListener> tickListeners;
 
 	private boolean disabling = false;
 	
@@ -261,5 +261,12 @@ public class NoteBlockAPI extends JavaPlugin {
 			dependentPlugins.put(plugins.get(0), true);
 		}
 	}
-	
+
+	public static void registerTickListener(TickListener tickListener) {
+		tickListeners.add(tickListener);
+	}
+
+	public static List<TickListener> getTickListeners() {
+		return tickListeners;
+	}
 }
